@@ -5,10 +5,11 @@ Server stack multithreading TCP communication , malloc , calloc & free implement
 
 # Description
 
-In this project we implemented a stack of strings to put it on our server , the server supports multiprocessing by using `fcntl()` file lock method.
-the server store the stack that we implemented and every client has it own proccess.
-The client sending command to the server that changing the stack to all the other clients , the `fcntl()` file lock method inspectoring that every method of the stack 
-will be preformed by only one proccess (client).
+In this project we implemented a stack of strings to put it on our server , the server supports multithread by POSIX mutex.
+the server store the stack that we implemented and every client has it own thread.
+The client sending command to the server that changing the stack to all the other clients , the mutex inspectoring that every method of the stack 
+will be preformed by only one thread (client).
+Every stack change is implemented with our own malloc that using sbrk().
 
 # Diagram of the communication :
 
@@ -20,11 +21,13 @@ As we can see the clients connecting to the server and the server stores the sta
 
 Files on this project :
                   
-* **server** - Implementation of server that handling new connections by proccesses , each connection has its own proccess and its supports many connections.
+* **Server_new** - Implementation of server that handling new connections by threads , each connection has its own thread and its supports many connections.
                   
 * **client** - The client connecting to the server and recieve message that approving the connection from the server, we used 127.0.0.1 to connect the server.
 
 * **Stack** - Stack of string that will be stored on the server.
+
+* **malloc** - Our implement for malloc & calloc & free to manipulate the heap.
 
 # Client commands:
 
@@ -47,3 +50,6 @@ Files on this project :
 ## Video of running:
 
 https://user-images.githubusercontent.com/92504985/164744819-bbd688aa-d728-4c18-8cd1-957829a016d6.mp4
+
+    
+                 
